@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jguerin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/16 12:31:57 by jguerin           #+#    #+#             */
+/*   Updated: 2023/04/16 12:31:58 by jguerin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
 #include <stdio.h>
 #include "get_next_line.h"
 
-static char *return_buffer(char *buffer, int fd)
+static char	*return_buffer(char *buffer, int fd)
 {
 	char	*str;
 	int		r;
-	r = 1;
 
+	r = 1;
 	str = ft_calloc(BUFFER_SIZE, sizeof(char));
-	while(r > 0)
+	while (r > 0)
 	{
 		r = read(fd, str, BUFFER_SIZE);
 		if (r < 0)
@@ -17,39 +29,40 @@ static char *return_buffer(char *buffer, int fd)
 			// free
 		}
 		buffer = ft_strjoin(buffer, str);
-		if(find_nl(buffer) == 1)
-			break;
+		if (find_nl(buffer) == 1)
+			break ;
 	}
-	return(buffer);
+	return (buffer);
 }
 
-static char *return_read(char *buffer)
+static char	*return_read(char *buffer)
 {
 	int		i;
 	char	*str;
+
 	i = 0;
-	while(buffer[i])
+	while (buffer[i])
 	{
-		if(buffer[i] == '\n')
-			break;
+		if (buffer[i] == '\n')
+			break ;
 		i++;
 	}
 	malloc(sizeof(char) * i + 1);
 	i = 0;
-	return(i);
+	return (i);
 }
 
-static char *delete_return(char *buffer)
+static char	*delete_return(char *buffer)
 {
 
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	char *po;
-	static char *buffer = NULL;
+	char		*po;
+	static char	*buffer = NULL;
 
-	if(fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	// 1ere etape ; renvoie tout ce qui a ete lu au buffer
 	buffer = return_buffer(buffer, fd);
@@ -62,13 +75,13 @@ char *get_next_line(int fd)
 	return (po);
 }
 
-int main(void)
+int	main(void)
 {
 	char	*line;
 	int		fd;
 
 	fd = open("test.txt", O_RDONLY);
-	while(line != NULL)
+	while (line != NULL)
 	{
 		printf("%s", line);
 	}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jguerin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/16 12:32:10 by jguerin           #+#    #+#             */
+/*   Updated: 2023/04/16 12:32:11 by jguerin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 static void	ft_bzero(void *s, size_t n)
@@ -34,7 +46,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		s1 = malloc(sizeof(char) * 1);
 		s1[0] = '\0';
 	}
-
 	if (!s1 || !s2)
 		return (NULL);
 	str = (char *)malloc(sizeof(*s1) * (ft_strlen(s1) + ft_strlen(s2) + 1));
@@ -58,16 +69,16 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-int find_nl(char *s)
+int	find_nl(char *s)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
-	while(s[i])
+	while (s[i])
 	{
-		if(s[i] == '\n')
-			return(1);
+		if (s[i] == '\n')
+			return (1);
 		i++;
 	}
-	return(0);
+	return (0);
 }
