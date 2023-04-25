@@ -43,29 +43,25 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (s1 == NULL)
 	{
-		s1 = malloc(sizeof(char) * 1);
+		s1 = malloc(1);
+		if (!s1)
+			return (free(s1), NULL);
 		s1[0] = '\0';
 	}
 	if (!s1 || !s2)
-		return (NULL);
+		return (free(s1), NULL);
 	str = (char *)malloc(sizeof(*s1) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	if (!str)
-		return (NULL);
-	i = 0;
+		return (free(s1), NULL);
+	i = -1;
 	j = 0;
-	while (s1[i])
-	{
+	while (s1[++i])
 		str[j++] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (s2[i])
-	{
+	i = -1;
+	while (s2[++i])
 		str[j++] = s2[i];
-		i++;
-	}
 	str[j] = 0;
-	free(s2);
+	free(s1);
 	return (str);
 }
 
@@ -74,6 +70,8 @@ int	find_nl(char *s)
 	size_t	i;
 
 	i = 0;
+	if (s == NULL)
+		return (0);
 	while (s[i])
 	{
 		if (s[i] == '\n')
@@ -81,4 +79,14 @@ int	find_nl(char *s)
 		i++;
 	}
 	return (0);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
