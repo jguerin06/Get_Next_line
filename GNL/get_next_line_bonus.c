@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jguerin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/16 12:31:57 by jguerin           #+#    #+#             */
-/*   Updated: 2023/04/25 16:19:44 by jguerin          ###   ########.fr       */
+/*   Created: 2023/04/25 16:27:35 by jguerin           #+#    #+#             */
+/*   Updated: 2023/04/25 16:27:37 by jguerin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 // Returns everything that has been read to the buffer
 
@@ -87,17 +87,17 @@ static char	*delete_return(char *buffer)
 char	*get_next_line(int fd)
 {
 	char		*str;
-	static char	*buffer = NULL;
+	static char	*buffer[4096];
 
 	str = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = return_buffer(buffer, fd);
-	if (!buffer)
+	buffer[fd] = return_buffer(buffer[fd], fd);
+	if (!buffer[fd])
 		return (NULL);
-	str = return_read(buffer);
-	buffer = delete_return(buffer);
-	if (!buffer)
-		free(buffer);
+	str = return_read(buffer[fd]);
+	buffer[fd] = delete_return(buffer[fd]);
+	if (!buffer[fd])
+		free(buffer[fd]);
 	return (str);
 }
